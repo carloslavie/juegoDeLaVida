@@ -1,6 +1,23 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import produce from 'immer';
-import { Button, Flex, Grid, Box } from "@chakra-ui/react"
+import { Button, Flex, Grid, Box } from "@chakra-ui/react";
+import styled from '@emotion/styled';
+
+const InputInt = styled.input`
+  padding: .4rem 0;
+  background-color: #3182ce;
+  color: #FFF;
+  text-align: center;
+  width: 50px;
+  font-size: 20px;
+`;
+
+const LabelInt = styled.label`
+  color: #FFF;
+  font-size: 16px;
+  font-weight: medium;
+  margin-right: 1rem;
+  `;
 
 const numRows = 50;
 const numCols = 50;
@@ -39,12 +56,12 @@ const Game = () => {
   const [ interval, setInterval ] = useState({
       intervalo:300
   })
+  const {intervalo} = interval;
 
   const runningRef = useRef(running);
   runningRef.current = running;
 
-  //useCallback con una array vacio para que solo lo ejecute una vez
-  const runSimulation = useCallback(() => {
+  const runSimulation = () => {
       if(!runningRef.current){
         return;
       }
@@ -73,37 +90,31 @@ const Game = () => {
         });
       });
   
-      setTimeout(runSimulation, 300);
-    }, []);
+      setTimeout(runSimulation, intervalo);
+    };
       
+    const handleInterval = e =>{
+      setInterval({
+        ...interval,
+        [e.target.name] : parseInt(e.target.value)  
+      })
+    }
 
   return (
     <>
     <Flex justifyContent="center" mt="2rem">
-        <Button 
-            m="1rem"
-            colorScheme="blue"
-            width="100px"
-            onClick={()=> {
-                setRunning(!running);
-                if(!running){
-                    runningRef.current = true;
-                    runSimulation();
-                }      
-            }}
-        >{running ? 'Detener' : 'Iniciar'}</Button>
 
         <Button 
             m="1rem"
             colorScheme="blue"
             width="100px"
             onClick= {()=>{
-                const rows = [];
-                for(let i = 0; i < numRows; i++){
+              const rows = [];
+              for(let i = 0; i < numRows; i++){
                 rows.push(Array.from(Array(numCols), ()=> (Math.random() > 0.7 ? 1 : 0)))
-                }
-
-                setGrid(rows)
+              }
+              
+              setGrid(rows)
             }}
         >Random</Button>
         
@@ -112,44 +123,78 @@ const Game = () => {
             colorScheme="blue"
             width="100px"
             onClick= {()=>{
-                setGrid(generateEmptyGrid())
+              setGrid(generateEmptyGrid())
             }}
         >Reiniciar</Button>
+        <Button 
+            m="1rem"
+            colorScheme="blue"
+            width="100px"
+            onClick={()=> {
+              // setRunning(!running);
+              runningRef.current = true;
+              runSimulation();
+              
+            }}
+        >x 1 </Button>
+        
+        <Button 
+                m="1rem"
+                colorScheme="blue"
+                width="100px"
+                onClick={()=> {
+                    setRunning(!running);
+                    if(!running){
+                        runningRef.current = true;
+                        runSimulation();
+                    }      
+                }}
+            >{running ? 'Detener' : 'Iniciar'}</Button>
+        
+        <Box m="auto 1rem" backgroundColor="#3182ce">
+          <InputInt
+              type="number"
+              name="intervalo"
+              value={intervalo}
+              onChange={handleInterval}
+          />
+          <LabelInt>ms de Intervalo</LabelInt>
+        </Box>
 
-</Flex>
-<Flex justifyContent="center" >   
-<Box 
-  backgroundImage="url('/images/head.png')" 
-  backgroundRepeat="no-repeat" 
-  bgSize="800px" 
-  backgroundPosition="center"  >                
-    <Grid 
-      templateColumns={`repeat(${numCols}, 20px)`}
-      backgroundColor="#28c7fabd"
-      border="3px solid #3182ce"
-      borderRadius="2%"
-      padding= "5px"
-    >
-      {grid.map((rows, i) => 
-      rows.map((col, k) => <div
-        onClick={()=>{
-          const newGrid = produce(grid, gridCopy=>{
-            gridCopy[i][k] = grid[i][k] ? 0 : 1;
-          })
-          setGrid(newGrid)
-        }}
-        key={`${i}-${k}`}
-        style={{
-        width:20, 
-        height:20, 
-        backgroundColor: grid[i][k] ? "#FAA44B" : undefined,
-        border: "1px solid #3182ce",
-        borderRadius:"50%",
-        }}/>
-        ))}
-    </Grid>
-    </Box>
-</Flex>
+    </Flex>
+    <Flex justifyContent="center" >   
+      <Box 
+        backgroundImage="url('/images/head.png')" 
+        backgroundRepeat="no-repeat" 
+        bgSize="800px" 
+        backgroundPosition="center"  >                
+          <Grid 
+            templateColumns={`repeat(${numCols}, 20px)`}
+            backgroundColor="#28c7fabd"
+            border="3px solid #3182ce"
+            borderRadius="2%"
+            padding= "5px"
+          >
+          {grid.map((rows, i) => 
+          rows.map((col, k) => <div
+            onClick={()=>{
+              const newGrid = produce(grid, gridCopy=>{
+                gridCopy[i][k] = grid[i][k] ? 0 : 1;
+              })
+              setGrid(newGrid)
+            }}
+            key={`${i}-${k}`}
+            style={{
+            width:20, 
+            height:20, 
+            backgroundColor: grid[i][k] ? "#FAA44B" : undefined,
+            border: "1px solid #3182ce",
+            borderRadius:"50%",
+            }}/>
+            ))}
+          </Grid>
+      </Box>
+    </Flex>
     </>
   );
 }
