@@ -104,11 +104,13 @@ const Game = () => {
 
   return (
     <>
-    <Flex justifyContent="center" mt="2rem">
+    <Flex 
+      flexDirection={{base:"column", sm:"column", md:"row", lg:"row"}}
+      justifyContent="center" mt="2rem">
         <Button 
-            m="1rem"
+            m={{base:".5rem auto", sm:".5rem auto", md:"1rem", lg:"1rem"}}
             colorScheme="blue"
-            width="100px"
+            width={{base:"full", sm:"full", md:"100px", lg:"100px"}}
             onClick= {()=>{
               const rows = [];
               for(let i = 0; i < numRows; i++){
@@ -120,17 +122,17 @@ const Game = () => {
         >Random</Button>
         
         <Button
-            m="1rem" 
+            m={{base:".5rem auto", sm:".5rem auto", md:"1rem", lg:"1rem"}} 
             colorScheme="blue"
-            width="100px"
+            width={{base:"full", sm:"full", md:"100px", lg:"100px"}}
             onClick= {()=>{
               setGrid(generateEmptyGrid())
             }}
         >Reiniciar</Button>
         <Button 
-            m="1rem"
+            m={{base:".5rem auto", sm:".5rem auto", md:"1rem", lg:"1rem"}}
             colorScheme="blue"
-            width="100px"
+            width={{base:"full", sm:"full", md:"100px", lg:"100px"}}
             onClick={()=> {
               runningRef.current = true;
               runSimulation();              
@@ -138,9 +140,9 @@ const Game = () => {
         >x 1 </Button>
         
         <Button 
-                m="1rem"
+                m={{base:".5rem auto", sm:".5rem auto", md:"1rem", lg:"1rem"}}
                 colorScheme="blue"
-                width="100px"
+                width={{base:"full", sm:"full", md:"100px", lg:"100px"}}
                 onClick={()=> {
                     setRunning(!running);
                     if(!running){
@@ -150,7 +152,7 @@ const Game = () => {
                 }}
         >{running ? 'Detener' : 'Iniciar'}</Button>
         
-        <Box m="auto 1rem" backgroundColor="#3182ce" borderRadius="1rem">
+        <Box m={{base:".5rem auto", sm:".5rem auto", md:"1rem", lg:"1rem"}} backgroundColor="#3182ce" borderRadius="1rem">
           <InputInt
               type="number"
               name="intervalo"

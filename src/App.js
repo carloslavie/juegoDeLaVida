@@ -8,15 +8,16 @@ function App() {
   return (
     <Box 
       boxShadow="lg"
-      maxWidth="1200px" 
-      m="50px auto" 
+      width={{base:"100%", sm:"100%", md:"1200px", lg:"1200px"}} 
+      maxWidth={{base:"100%", sm:"100%", md:"1200px", lg:"1200px"}} 
+      m={{base:"auto", sm:"auto", md:"50px auto", lg:"50px auto"}}  
       pb="50px" 
       backgroundColor="#28c7fa" 
-      borderRadius="2%">
+      borderRadius={{base:"0", sm:"0", md:"2%", lg:"2%"}}>
       <Flex flexDirection="column" justifyContent="center">
         <Box 
           fontFamily="Roboto"
-          fontSize="6rem" 
+          fontSize={{base:"2.5rem", sm:"2.5rem", md:"6rem", lg:"6rem"}} 
           textAlign="center" 
           fontWeight="semibold"            
           pt="2rem"
