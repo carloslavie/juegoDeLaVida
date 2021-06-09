@@ -10,6 +10,8 @@ const InputInt = styled.input`
   text-align: center;
   width: 50px;
   font-size: 20px;
+  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem;
 `;
 
 const LabelInt = styled.label`
@@ -103,7 +105,6 @@ const Game = () => {
   return (
     <>
     <Flex justifyContent="center" mt="2rem">
-
         <Button 
             m="1rem"
             colorScheme="blue"
@@ -131,10 +132,8 @@ const Game = () => {
             colorScheme="blue"
             width="100px"
             onClick={()=> {
-              // setRunning(!running);
               runningRef.current = true;
-              runSimulation();
-              
+              runSimulation();              
             }}
         >x 1 </Button>
         
@@ -149,9 +148,9 @@ const Game = () => {
                         runSimulation();
                     }      
                 }}
-            >{running ? 'Detener' : 'Iniciar'}</Button>
+        >{running ? 'Detener' : 'Iniciar'}</Button>
         
-        <Box m="auto 1rem" backgroundColor="#3182ce">
+        <Box m="auto 1rem" backgroundColor="#3182ce" borderRadius="1rem">
           <InputInt
               type="number"
               name="intervalo"
@@ -174,6 +173,7 @@ const Game = () => {
             border="3px solid #3182ce"
             borderRadius="2%"
             padding= "5px"
+            boxShadow="xl"
           >
           {grid.map((rows, i) => 
           rows.map((col, k) => <div

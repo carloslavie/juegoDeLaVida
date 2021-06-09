@@ -20,6 +20,7 @@ function App() {
           textAlign="center" 
           fontWeight="semibold"            
           pt="2rem"
+          textShadow= "3px 3px #308fad"
         >Juego de la Vida</Box>
         <Box 
           fontFamily="Pt Sans"
