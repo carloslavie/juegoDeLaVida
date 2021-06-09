@@ -79,10 +79,11 @@ const Game = () => {
 
   return (
     <>
-    <Flex justifyContent="center">
+    <Flex justifyContent="center" mt="2rem">
         <Button 
             m="1rem"
             colorScheme="blue"
+            width="100px"
             onClick={()=> {
                 setRunning(!running);
                 if(!running){
@@ -95,6 +96,7 @@ const Game = () => {
         <Button 
             m="1rem"
             colorScheme="blue"
+            width="100px"
             onClick= {()=>{
                 const rows = [];
                 for(let i = 0; i < numRows; i++){
@@ -108,20 +110,25 @@ const Game = () => {
         <Button
             m="1rem" 
             colorScheme="blue"
+            width="100px"
             onClick= {()=>{
                 setGrid(generateEmptyGrid())
             }}
         >Reiniciar</Button>
 
 </Flex>
-<Flex justifyContent="center">   
-<Box backgroundColor="#28c7fa69" >                
+<Flex justifyContent="center" >   
+<Box 
+  backgroundImage="url('/images/head.png')" 
+  backgroundRepeat="no-repeat" 
+  bgSize="800px" 
+  backgroundPosition="center"  >                
     <Grid 
       templateColumns={`repeat(${numCols}, 20px)`}
-      backgroundImage="url('/images/head.png')" 
-      backgroundRepeat="no-repeat" 
-      bgSize="800px" 
-      backgroundPosition="center"      
+      backgroundColor="#28c7fabd"
+      border="3px solid #3182ce"
+      borderRadius="2%"
+      padding= "5px"
     >
       {grid.map((rows, i) => 
       rows.map((col, k) => <div
@@ -135,8 +142,8 @@ const Game = () => {
         style={{
         width:20, 
         height:20, 
-        backgroundColor: grid[i][k] ? "#000" : undefined,
-        border: "1px solid #000",
+        backgroundColor: grid[i][k] ? "#FAA44B" : undefined,
+        border: "1px solid #3182ce",
         borderRadius:"50%",
         }}/>
         ))}
